@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Configuration status="INFO">
+    <Appenders>
+
+        <RollingFile name="audit-register" filename="resources/register.log"
+                     filePattern="/tmp/logs/audit-registert-%d{MM-dd-yyyy-HH:mm:ss}.%i.log.gz">
+            <PatternLayout>
+                <pattern>%m%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="1 GB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="20"/>
+        </RollingFile>
+
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d %-5p [%t] %C{2} (%F:%L) - %m%n"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+
+        <Root level="all">
+            <AppenderRef ref="audit-register" level="debug"/>
+        </Root>
+
+        <Logger name="*" level="info">
+            <AppenderRef ref="Console"/>
+        </Logger>
+
+
+    </Loggers>
+
+</Configuration>
