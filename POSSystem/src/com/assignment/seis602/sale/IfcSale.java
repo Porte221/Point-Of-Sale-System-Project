@@ -3,18 +3,18 @@
  */
 
 
-package com.assignment.seis602.Interfaces;
+package com.assignment.seis602.sale;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import com.assignment.seis602.Sale.*;
-import com.assignment.seis602.Inventory.*;
-import com.assignment.seis602.Item.*;
+
+import com.assignment.seis602.inventory.*;
+import com.assignment.seis602.item.*;
 
 public interface IfcSale 
 {
 	//Pass the same inventory object which was used to initialize inventory when register started.
-	//First Call getAvailableInventoryItems() method of Inventory Interface to fetch the list of all available items in the Inventory
+	//First Call getAvailableInventoryItems() method of inventory Interface to fetch the list of all available items in the inventory
 	//Choose items for the sale and pass it on as a List 
 	public boolean createSale(Inventory Ivr,ArrayList<Item> ItemList);	
 	
@@ -23,7 +23,7 @@ public interface IfcSale
 	 *Implementation may change based on the final code
 	*/
 	
-	//This method will be used to get the Items linked to a Sale.
+	//This method will be used to get the Items linked to a sale.
 	public HashMap<Integer,Sale> getItemsForSaleMap(int saleID);
 	
 	
