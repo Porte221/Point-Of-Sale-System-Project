@@ -5,5 +5,6 @@ public interface Reportable {
 
     void generateDetailedReport(Object identifier);
 
+    void log(String message);
 
 }
