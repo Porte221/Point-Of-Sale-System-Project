@@ -9,9 +9,27 @@ import java.util.Random;
 
 public class Sale implements IfcSale {
     private Inventory invObj;
-    private double saleCost;
+    private int saleID;
+    private double saleAmount;
+    private Map<String, Item> saleItems;
+
+    public Sale() {
+        saleID = new Random().nextInt();
+        saleItems = new HashMap();
+    }
+
+    public void addItems(Item item) {
+
+    }
 
 
+    public void removeItems(Item item) {
+
+    }
+
+    public int getSaleID() {
+        return saleID;
+    }
 
 
     //Validate the Sale ID from SaleMap and use accordingly
@@ -42,6 +60,7 @@ public class Sale implements IfcSale {
     }
 
 
+
     public void addItem(Item item) {
 
     }
@@ -52,27 +71,7 @@ public class Sale implements IfcSale {
     }
 
 
-        private int saleID;
-        private double saleAmount;
-        private Map<String, Item> saleItems;
 
-        public Sale() {
-            saleID = new Random().nextInt();
-            saleItems = new HashMap();
-        }
-
-        public void addItems(Item item) {
-
-        }
-
-
-        public void removeItems(Item item) {
-
-        }
-
-        public int getSaleID() {
-            return saleID;
-        }
 
 
 
