@@ -69,7 +69,7 @@ public class Sale implements IfcSale
     }
 
 	@Override
-	public boolean ReturnItemOnSale(int SaleId) 
+	public boolean returnItemOnSale(int SaleId)
 	{
 		//Using the Sale ID , first check if the Sale is Valid by calling isSaleIDValid method.
 		//If Sale found to be valid, pull up all the items against the sale from the SaleItemMap.
@@ -87,6 +87,10 @@ public class Sale implements IfcSale
 		// 
 		
 		return false;
+	}
+
+	public int getSaleID() {
+		return saleID;
 	}
 	
 	// May be Have a method to Write the state of Sale File as a Flat file ??

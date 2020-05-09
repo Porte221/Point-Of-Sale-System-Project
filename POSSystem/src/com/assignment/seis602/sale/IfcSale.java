@@ -38,5 +38,5 @@ public interface IfcSale
 	
 	//Check the validity of SaleID by calling isSaleIDValid method and if true pass the sale ID
 	//Choose the items to be selected by first calling the getItemsforSale() method, pass these items to this method
-    public boolean ReturnItemOnSale(int SaleId);
+    public boolean returnItemOnSale(int SaleId);
 }
