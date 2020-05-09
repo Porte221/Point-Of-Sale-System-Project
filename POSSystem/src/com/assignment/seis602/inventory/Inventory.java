@@ -6,7 +6,6 @@ import com.assignment.seis602.item.Item;
 import java.util.*;
 import java.util.Map.Entry;
 import java.io.*;
-import java.time.LocalDate;
 
 import com.assignment.seis602.orderStock.OrderStock;
 
@@ -57,8 +56,6 @@ public class Inventory implements Serializable,IfcInventory
     	
       //Now create Inventory for these objects
      	File objectFile = new File(DataStateLocation);
-     	FileOutputStream fout=null;
-     	ObjectOutputStream oos=null;
      	FileInputStream fin=null;
      	ObjectInputStream ois=null;
      	
@@ -215,7 +212,7 @@ public class Inventory implements Serializable,IfcInventory
      		}
     		break;
     		
-    	case 'A':
+    	   case 'A':
     		// 'A' refers to add items from return or cancellation of sale to Inventory   		
     		
 	        Iterator<Entry<Item, Integer>> itr2 = itemMap.entrySet().iterator(); 

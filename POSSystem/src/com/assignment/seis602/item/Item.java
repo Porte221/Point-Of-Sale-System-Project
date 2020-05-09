@@ -1,6 +1,5 @@
 package com.assignment.seis602.item;
 
-
 import com.assignment.seis602.item.IfcItem;
 import java.io.File;
 import java.io.FileNotFoundException;
