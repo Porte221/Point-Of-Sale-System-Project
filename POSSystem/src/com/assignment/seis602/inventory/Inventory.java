@@ -57,8 +57,6 @@ public class Inventory implements Serializable,IfcInventory
     	
       //Now create Inventory for these objects
      	File objectFile = new File(DataStateLocation);
-     	FileOutputStream fout=null;
-     	ObjectOutputStream oos=null;
      	FileInputStream fin=null;
      	ObjectInputStream ois=null;
      	
