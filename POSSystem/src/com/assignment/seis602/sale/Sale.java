@@ -9,7 +9,7 @@ import java.util.Random;
 
 public class Sale implements IfcSale {
     private Inventory invObj;
-
+    private double saleCost;
 
 
 
@@ -90,7 +90,6 @@ public class Sale implements IfcSale {
 		   6. delegate a call to adjustInventoryMethod() , pass the hashMap , inv object and type of adjustment
 		   7. ONce sale is completed , add the sale object to saleMap.
 		*/
-
 
 
 

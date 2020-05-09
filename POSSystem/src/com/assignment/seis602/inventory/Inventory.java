@@ -47,7 +47,7 @@ public class Inventory implements Serializable, IfcInventory {
     }
 
     //This Methods are to be called only once at the start of the application when user log in is successfully.
-    //Load data related to items in inventory    
+    //Load data related to items in inventory
     private void createInventoryForItems() throws IOException {
         //This file be used as a data-store to perform IO operations based on when an item is updated.
 
@@ -136,7 +136,7 @@ public class Inventory implements Serializable, IfcInventory {
         }
     }
 
-    // Read data from Inventory list    
+    // Read data from Inventory list
     public ConcurrentHashMap<String, Inventory> getAvailableInventoryItems() {
         return this.InvHashMap;
     }
