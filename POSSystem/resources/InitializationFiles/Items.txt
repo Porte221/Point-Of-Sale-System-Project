@@ -1,0 +1,18 @@
+Max Payne,E,50.00
+Light Bulb,H,3.99
+Zen Phone,E,150.00
+Desk,HF,50.00
+Cleaner,H,5.99
+paper towels,H,19.00
+Wipes,H,10.00
+Potatoes,G,1.99
+Cookies,G,2.99
+GTA,E,50.00
+FIFA,E,60.99
+Fruits,G,2.50
+Table,HF,50.00
+Clean X,H,5.44
+Bath Towels,H,12.00
+Wiper Blades,,10.00
+Tools,,4.99
+Chocolate,,2.99

@@ -17,6 +17,6 @@ public interface IfcItem
 	public boolean StartCreateItems();
 	
 	//This Method will be used to create the inventory from the returned Items
-	public ArrayList<Item> getItemList();
+	public static ArrayList<Item> getItemList(){return Item.getItemList();};
 
 }

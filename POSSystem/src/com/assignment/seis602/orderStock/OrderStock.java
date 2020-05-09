@@ -7,33 +7,33 @@ import com.assignment.seis602.item.Item;
 public class OrderStock 
 {
 
-	private int orderNumber;
+	private Long orderNumber;
 	private LocalDate orderDate;
 	private Item orderItem;
 	private String SupplierName;
-	private String SupplierAddress;
 	private int orderQuantity;
+	private static int minOrderNumber=10;
 	
-	OrderStock()
+	public OrderStock()
 	{
-	  	
+	  
 	}
 
-    OrderStock(int ordrNum,LocalDate ordDate,Item ordItem,String suppName, String suppAddr,int quantity)
+    public OrderStock(Item ordItem,String suppName,int quantity)
     {
-    	this.orderDate=ordDate;
-    	this.orderItem=ordItem;
-    	this.orderNumber=ordrNum;
+    	this.orderItem=ordItem;	
     	this.orderQuantity=quantity;
-    	this.SupplierAddress=suppAddr;
     	this.SupplierName=suppName;
+    	
+    	orderDate	= LocalDate.now();
+  	    this.orderNumber=Math.round(Math.random()*5)+minOrderNumber++;
     }
 
-	public int getOrderNumber() {
+	public Long getOrderNumber() {
 		return orderNumber;
 	}
 
-	public void setOrderNumber(int orderNumber) {
+	public void setOrderNumber(Long orderNumber) {
 		this.orderNumber = orderNumber;
 	}
 
@@ -60,15 +60,7 @@ public class OrderStock
 	public void setSupplierName(String supplierName) {
 		SupplierName = supplierName;
 	}
-
-	public String getSupplierAddress() {
-		return SupplierAddress;
-	}
-
-	public void setSupplierAddress(String supplierAddress) {
-		SupplierAddress = supplierAddress;
-	}
-
+	
 	public int getOrderQuantity() {
 		return orderQuantity;
 	}

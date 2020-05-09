@@ -21,14 +21,14 @@ public class Item implements Serializable,IfcItem
 		
 	}
 	
-	Item(String name,ItemCategory category, double price)
+	public Item(String name,ItemCategory category, double price)
 	{
 		this.itemCatrgory=category;
 		this.itemName=name;
 		this.unitPrice=price;
 	}
 	
-	public ArrayList<Item> getItemList()
+	public static ArrayList<Item> getItemList()
 	{
 		return ItemList;
 	}
@@ -48,7 +48,7 @@ public class Item implements Serializable,IfcItem
 	 	
 	  try
 	  {
-	  	sourceFile = new File("C:\\Users\\asharm145\\workspace\\POSSystem\\resources\\InitializationFiles\\Items.txt");
+	  	sourceFile = new File("/Users/aadilsharma/Eclipse-git/repository/Point-Of-Sale-System-Project/POSSystem/resources/InitializationFiles/Items.txt");
 	  	scr = new Scanner(sourceFile);
 	  		while (scr.hasNextLine())
 	   		{
