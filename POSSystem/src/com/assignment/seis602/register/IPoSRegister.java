@@ -1,12 +1,14 @@
 package com.assignment.seis602.register;
 
-public interface IPoSRegister<T> {
+import com.assignment.seis602.item.Item;
+
+public interface IPoSRegister {
 
     void startOrder();
 
-    void addItem(T itemToAdd);
+    void addItem(Item itemToAdd);
 
-    void removeItem(T itemToRemove);
+    void removeItem(Item itemToRemove);
 
     void cancelOrder();
 

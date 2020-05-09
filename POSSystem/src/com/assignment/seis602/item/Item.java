@@ -1,7 +1,6 @@
 package com.assignment.seis602.item;
 
 
-import com.assignment.seis602.item.IfcItem;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.Serializable;
@@ -12,7 +11,7 @@ public class Item implements Serializable,IfcItem
 {
 
 	private String itemName; 
-	private ItemCategory itemCatrgory;
+	private ItemCategory itemCategory;
 	private double unitPrice;
 	private final static ArrayList<Item> ItemList = new ArrayList<Item>();
 	
@@ -23,7 +22,7 @@ public class Item implements Serializable,IfcItem
 	
 	public Item(String name,ItemCategory category, double price)
 	{
-		this.itemCatrgory=category;
+		this.itemCategory =category;
 		this.itemName=name;
 		this.unitPrice=price;
 	}
@@ -32,11 +31,11 @@ public class Item implements Serializable,IfcItem
 	{
 		return ItemList;
 	}
-	
+
 	public boolean StartCreateItems()
 	{
 	   	return createItems();
-	}	  
+	}
 	 
 	//This Methods are to be called only once at the start of the application when user log in is successfully.
 	//Create Items from resource files    
@@ -48,7 +47,7 @@ public class Item implements Serializable,IfcItem
 	 	
 	  try
 	  {
-	  	sourceFile = new File("/Users/aadilsharma/Eclipse-git/repository/Point-Of-Sale-System-Project/POSSystem/resources/InitializationFiles/Items.txt");
+	  	sourceFile = new File("/resources/InitializationFiles/Items.txt");
 	  	scr = new Scanner(sourceFile);
 	  		while (scr.hasNextLine())
 	   		{
@@ -101,8 +100,8 @@ public class Item implements Serializable,IfcItem
 		this.itemName = itemName;
 	}
 
-	public ItemCategory getItemCatrgory() {
-		return itemCatrgory;
+	public ItemCategory getItemCategory() {
+		return itemCategory;
 	}
 
 	public double getUnitPrice() {
@@ -116,6 +115,6 @@ public class Item implements Serializable,IfcItem
 	
 	public String toString()
 	{
-		return this.getItemName()+", "+this.getItemCatrgory()+", "+this.unitPrice;
+		return this.getItemName()+", "+this.getItemCategory()+", "+this.unitPrice;
 	}
 }
