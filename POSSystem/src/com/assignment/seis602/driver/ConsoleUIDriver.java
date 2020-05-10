@@ -1,5 +1,8 @@
 package com.assignment.seis602.driver;
 
+import com.assignment.seis602.cashier.Cashier;
+import com.assignment.seis602.inventory.Inventory;
+import com.assignment.seis602.item.Item;
 import com.assignment.seis602.register.PoSRegister;
 
 import java.io.BufferedReader;
@@ -13,7 +16,6 @@ public class ConsoleUIDriver {
 
     public static void main(String[] args) {
         System.out.println("---Welcome to the Point of Sale System---");
-        //Authenticate
         loadSystemDependencies();
         startListener();
     }
@@ -21,6 +23,8 @@ public class ConsoleUIDriver {
 
 
     private static void loadSystemDependencies() {
+//        new Item().StartCreateItems();
+//        new Inventory().generateInventoryItems();
         register = new PoSRegister();
     }
 
@@ -50,13 +54,14 @@ public class ConsoleUIDriver {
                 if (response.equals("1")) {
                     register.startOrder();
                 } else if (response.equals("2")) {
-                    //register.reauthenticate();
+                    register.authenticate();
                 } else if (response.equals("3")) {
                     System.exit(1);
                 } else if (response.equals("4")) {
                     register.generateReport();
                 } else if (response.equals("5")) {
-                    register.generateDetailedReport("Name");
+                    System.out.println("Please enter the username or other identifier to generate detailed report.");
+                    register.generateDetailedReport(new BufferedReader(new InputStreamReader(System.in)).readLine());
                 }
             } while (true);
         } catch (Exception e) {

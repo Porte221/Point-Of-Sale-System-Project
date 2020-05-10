@@ -23,8 +23,8 @@ public class Inventory implements Serializable, IfcInventory {
     private ConcurrentHashMap<String, Inventory> InvHashMap = new ConcurrentHashMap<String, Inventory>(20, 0.75F);
 
     //Before running the program ,Change these values as per your local project workspace
-    private static String outputLocation = "/Users/aadilsharma/Eclipse-git/repository/Point-Of-Sale-System-Project/POSSystem/resources/OutputFiles/InventoryFile.txt";
-    private static String DataStateLocation = "/Users/aadilsharma/Eclipse-git/repository/Point-Of-Sale-System-Project/POSSystem/resources/DataStateFile/ObjectStateFile.txt";
+    private static String outputLocation = "OutputFiles/InventoryFile.txt";
+    private static String DataStateLocation = "DataStateFile/ObjectStateFile.txt";
 
     public Inventory() {
 
@@ -243,6 +243,14 @@ public class Inventory implements Serializable, IfcInventory {
         }
 
         return true;
+    }
+
+    public boolean containsAvailableItem(String itemName) {
+        return true;
+    }
+
+    public Item getItem(String itemName) {
+        return null;
     }
 
     public int getStockPerItem() {

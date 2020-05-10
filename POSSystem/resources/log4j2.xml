@@ -5,7 +5,7 @@
         <RollingFile name="audit-register" filename="resources/register.log"
                      filePattern="/tmp/logs/audit-registert-%d{MM-dd-yyyy-HH:mm:ss}.%i.log.gz">
             <PatternLayout>
-                <pattern>%m%n</pattern>
+                <pattern>%d %m%n</pattern>
             </PatternLayout>
             <Policies>
                 <SizeBasedTriggeringPolicy size="1 GB"/>

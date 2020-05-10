@@ -1,6 +1,5 @@
 package com.assignment.seis602.sale;
 
-import com.assignment.seis602.inventory.Inventory;
 import com.assignment.seis602.item.Item;
 
 import java.util.HashMap;
@@ -8,29 +7,48 @@ import java.util.Map;
 import java.util.Random;
 
 public class Sale implements IfcSale {
-    private Inventory invObj;
     private int saleID;
     private double saleAmount;
-    private Map<String, Item> saleItems;
+    private Map<String, SaleItem> saleItems;
 
     public Sale() {
         saleID = new Random().nextInt();
         saleItems = new HashMap();
     }
 
-    public void addItems(Item item) {
-
+    public void addItem(Item item) {
+        SaleItem storedItem = saleItems.get(item.getItemName());
+        if (storedItem == null) {
+            saleItems.put(item.getItemName(), new SaleItem(item));
+        } else {
+            int count = storedItem.getItemCount();
+            storedItem.setItemCount(count + 1);
+            saleItems.put(item.getItemName(), storedItem);
+        }
     }
 
 
-    public void removeItems(Item item) {
-
+    public void removeItem(Item item) {
+        saleItems.remove(item.getItemName());
     }
+
+    public SaleItem getSaleItem(String itemName) {
+        return saleItems.get(itemName);
+    }
+
 
     public int getSaleID() {
         return saleID;
     }
 
+
+    public double getSaleAmount() {
+        return saleAmount;
+    }
+
+    public void setSaleAmount(double saleAmount) {
+        this.saleAmount = saleAmount;
+    }
 
     //Validate the Sale ID from SaleMap and use accordingly
     public boolean isSaleIDValid(int SaleID) {
@@ -59,22 +77,9 @@ public class Sale implements IfcSale {
         return false;
     }
 
-
-
-    public void addItem(Item item) {
-
+    public Map getSaleItems() {
+        return saleItems;
     }
-
-
-    public void removeItem(Item item) {
-
-    }
-
-
-
-
-
-
 
 
 }

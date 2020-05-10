@@ -1,6 +1,7 @@
 package com.assignment.seis602.register;
 
 import com.assignment.seis602.cashier.Cashier;
+import com.assignment.seis602.cashier.CashierAuthenticator;
 import com.assignment.seis602.inventory.Inventory;
 import com.assignment.seis602.item.Item;
 import com.assignment.seis602.logging.PoSLogger;
@@ -11,7 +12,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Random;
-import java.util.Scanner;
 /*
         1. The register needs to be able to add items to the sale
         2. The register needs to be able to remove items to the sale
@@ -32,7 +32,7 @@ public class PoSRegister implements IPoSRegister {
         logger.log("Register: " + registerId + " has been started");
 
         this.inventory = new Inventory();
-        this.cashier = new Cashier();
+        this.cashier = CashierAuthenticator.conductUserLogin();
         logger.log("Cashier: " + "" + " logged in");
 
 
@@ -50,14 +50,14 @@ public class PoSRegister implements IPoSRegister {
                 System.out.println(response.equals("3"));
 
                 if (response.equals("1")) {
-                  handleItemAddition();
+                    handleItemAddition();
                 } else if (response.equals("2")) {
-                    System.out.println(2);
+                    handleItemRemoval();
                 } else if (response.equals("3")) {
-                    System.out.println(3);
+                    cancelOrder();
                     break;
                 } else if (response.equals("4")) {
-                    System.out.println(4);
+                    checkout();
                     break;
                 }
             } while (true);
@@ -69,16 +69,17 @@ public class PoSRegister implements IPoSRegister {
 
     private void handleItemAddition() throws IOException {
         System.out.println("Enter item name: ");
-
+        inventory.generateInventoryItems();
 
         BufferedReader reader =
                 new BufferedReader(new InputStreamReader(System.in));
 
         String itemName = reader.readLine();
 
-        //if item can be added
-        //additem(item)
-        //else inform user
+
+        if (inventory.containsAvailableItem(itemName)) {
+            // addItem(inventory.get);
+        }
         addItem(new Item());
     }
 
@@ -92,34 +93,46 @@ public class PoSRegister implements IPoSRegister {
 
         String itemName = reader.readLine();
 
-        //if item can be added
-        //additem(item)
-        //else inform user
-        removeItem(new Item());
+        removeItem(saleItem.getSaleItem(itemName).getItem());
     }
-
 
 
     @Override
     public void addItem(Item itemToAdd) {
-
+        saleItem.addItem(itemToAdd);
+        //update inventory
         logger.log("Item: " + itemToAdd + " was added to the sale: " + saleItem.getSaleID());
     }
 
     @Override
     public void removeItem(Item itemToRemove) {
+        saleItem.removeItem(itemToRemove);
+        //update inventory
         logger.log("Item: " + itemToRemove + " was added to the sale: " + saleItem.getSaleID());
     }
 
     @Override
     public void cancelOrder() {
         logger.log("Sale was canceled: " + saleItem.getSaleID());
+        //update inventory
         saleItem = null;
     }
 
     @Override
     public void checkout() {
+        printReceipt();
         logger.log("Sale: " + saleItem.getSaleID() + " has been checked out");
+    }
+
+    private void printReceipt() {
+        System.out.println("--Point of Sale Receipt--");
+        //saleItem.returnItemOnSale();
+
+        saleItem.getSaleItems().forEach((key, value) -> System.out.println(key + ":" + value));
+
+        System.out.println("Total Price: " + saleItem.getSaleAmount());
+
+
     }
 
     @Override
@@ -137,11 +150,10 @@ public class PoSRegister implements IPoSRegister {
     }
 
 
-
-    private void reauthenticate() {
-        logger.log("Cashier: " + "" + " logged out");
-        cashier = new Cashier();
-        logger.log("Cashier: " + "" + " logged in");
+    public void authenticate() {
+        logger.log("Cashier: " + cashier.getUsername() + " logged out");
+        cashier = CashierAuthenticator.conductUserLogin();
+        logger.log("Cashier: " + cashier.getUsername() + " logged in");
 
     }
 
@@ -157,7 +169,6 @@ public class PoSRegister implements IPoSRegister {
 
         return reader.readLine();
     }
-
 
 
 }
