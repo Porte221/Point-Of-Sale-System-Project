@@ -40,7 +40,7 @@ public class Item implements Serializable, IfcItem {
         File sourceFile;
 
         try {
-            sourceFile = new File("InitializationFiles/Items.txt");
+            sourceFile = new File("resources/InitializationFiles/Items.txt");
             scr = new Scanner(sourceFile);
             while (scr.hasNextLine()) {
                 String readLine = scr.nextLine();

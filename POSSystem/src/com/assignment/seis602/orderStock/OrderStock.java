@@ -1,10 +1,11 @@
 package com.assignment.seis602.orderStock;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 import com.assignment.seis602.item.Item;
 
-public class OrderStock 
+public class OrderStock implements Serializable
 {
 
 	private Long orderNumber;

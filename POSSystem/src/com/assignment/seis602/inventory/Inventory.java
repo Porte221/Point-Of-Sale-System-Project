@@ -21,10 +21,8 @@ public class Inventory implements Serializable, IfcInventory {
     private double itemThreshold;
     private OrderStock OrderItem;
     private ConcurrentHashMap<String, Inventory> InvHashMap = new ConcurrentHashMap<String, Inventory>(20, 0.75F);
-
-    //Before running the program ,Change these values as per your local project workspace
-    private static String outputLocation = "OutputFiles/InventoryFile.txt";
-    private static String DataStateLocation = "DataStateFile/ObjectStateFile.txt";
+    private static String outputDataStateLocation = "resources/DataStateFile/ObjectStateFile.txt";
+    private static String DataStateLocation = "resources/DataStateFile/ObjectStateFile.txt";
 
     public Inventory() {
 
@@ -35,7 +33,6 @@ public class Inventory implements Serializable, IfcInventory {
         this.itemThreshold = threshold;
         this.OrderItem = ordrObj;
         this.StockPerItem = stock;
-        generateInventoryItems();
     }
 
     public void generateInventoryItems() {
@@ -48,27 +45,24 @@ public class Inventory implements Serializable, IfcInventory {
 
     //This Methods are to be called only once at the start of the application when user log in is successfully.
     //Load data related to items in inventory
-    private void createInventoryForItems() throws IOException {
+    private void createInventoryForItems() throws IOException 
+    {
         //This file be used as a data-store to perform IO operations based on when an item is updated.
 
-        //Now create Inventory for these objects
         File objectFile = new File(DataStateLocation);
-        FileOutputStream fout = null;
-        ObjectOutputStream oos = null;
         FileInputStream fin = null;
         ObjectInputStream ois = null;
 
 
-        if (objectFile.exists()) {
+        if (objectFile.exists()) 
+        {
             //Read current state from the existing Object state file.
-
             fin = new FileInputStream(objectFile);
             ois = new ObjectInputStream(fin);
 
-            try {
+            try 
+            {
                 InvHashMap = (ConcurrentHashMap<String, Inventory>) ois.readObject();
-
-                //check if the item is less than the threshold, if found then create a re-stock order.
 
             } catch (IOException | ClassNotFoundException ex) {
                 ex.printStackTrace();
@@ -78,60 +72,58 @@ public class Inventory implements Serializable, IfcInventory {
             }
         } else {
             //Create a new Object State file using the items file
-            ArrayList<Item> itemList = new Item().getItemList();
+            ArrayList<Item> itemList = Item.getItemList();
             int minVStockValue = 10;
 
             for (Item e : itemList) {
                 InvHashMap.put(e.getItemName(), new Inventory(e, Math.round((minVStockValue) * 0.40), null, (int) (Math.random() * 5) + minVStockValue));
             }
 
-            writeInventoryFile(DataStateLocation, this);
+            writeInventoryFile(outputDataStateLocation, this);
         }
     }
 
     private boolean createReStockOrder() {
-        //if while creating the Inventory data , any
-
-        /* Iterate on the whole updated Inventory Map
-         * Check the Stock against the Threshold and check whether an Order already exist,
-         * If Order exist, return the control back and do not create a new Order.
-         * Else ,if Stock found to be less than threshold, create a Object of OrderStock class
-         * update the inventory class variable OrderStock with the object created in earlier step
-         *
-         * Update the inventory by calling writeInventoryFile and passing the updated inv object method
-         */
-
-        //ConcurrentHashMap<String,Inventory> emp = this.getAvailableInventoryItems();
 
         Iterator<Entry<String, Inventory>> itr = this.getAvailableInventoryItems().entrySet().iterator();
 
         ArrayList<Item> itemList = Item.getItemList();
         Item itemObjForOrder = null;
 
-        if (itr != null && itemList != null) {
-            while (itr.hasNext()) {
+        if (itr != null && itemList != null) 
+        {
+            while (itr.hasNext()) 
+            {
                 Map.Entry<String, Inventory> mapElement = (Map.Entry<String, Inventory>) itr.next();
                 Inventory invObj = mapElement.getValue();
 
-                if (invObj.StockPerItem < invObj.itemThreshold) {
+                if (invObj.StockPerItem < invObj.itemThreshold) 
+                {
                     System.out.println("Item stock found to be less than item threshold defined...creating restock order");
 
-                    for (Item e : itemList) {
-                        if (e.getItemName().equalsIgnoreCase(mapElement.getKey())) {
+                    for (Item e : itemList) 
+                    {
+                        if (e.getItemName().equalsIgnoreCase(mapElement.getKey())) 
+                        {
                             System.out.println("Item Found");
                             itemObjForOrder = e;
                         }
                     }
-                    if (itemObjForOrder != null) {
+                    
+                   if (itemObjForOrder != null) 
+                    {
                         invObj.OrderItem = new OrderStock(itemObjForOrder, "ABC", 10);
                     } else {
-                        System.out.println("Item not found , no order will be generated for item :" + mapElement.getKey());
+                        System.out.println("Order already exist ,no new order will be generated for item :" + mapElement.getKey());
                     }
-                }
-
-            }
+                  }
+             }
+            // Rewriting the file
+            writeInventoryFile(outputDataStateLocation, this);
+            
             return true;
-        } else {
+        } 
+        else {
             return false;
         }
     }
@@ -144,8 +136,11 @@ public class Inventory implements Serializable, IfcInventory {
     public void adjustInventory(HashMap<Item, Integer> itemMap, char typeOfAdjustment) {
         //This method will update the inventory based on whether the items are added or removed...
         //Pull up items from the itemList and access the same in InvHashMap collection.
+    	
+    	boolean canAdjustItems=false;
 
-        switch (typeOfAdjustment) {
+        switch (typeOfAdjustment)
+        {
             case 'R':
                 //'R' refers to removing items of sale from Inventory
 
@@ -161,22 +156,39 @@ public class Inventory implements Serializable, IfcInventory {
 
                         Inventory tempInv = this.InvHashMap.get(ItemObj.getItemName());
 
-                        if (tempInv.getStockPerItem() - quantityPurchased >= 0) {
+                        if (tempInv.getStockPerItem() - quantityPurchased >= 0) 
+                        {
+                        	canAdjustItems =true;
                             tempInv.setStockPerItem(tempInv.getStockPerItem() - quantityPurchased);
 
                             System.out.println("Item - " + ItemObj + " is Updated.");
-                        } else {
+                        } 
+                        else 
+                        {
+                        	canAdjustItems=false;
                             System.out.println("cannot update the stock less than 0");
+                           
                         }
                     }
                 }
 
                 //Make a call to CreateReStockOrder() by passing the updated state of inventory.
 
-                if (this.createReStockOrder()) {
+                if(canAdjustItems)
+                {
+                 if (this.createReStockOrder()) 
+                 {
                     System.out.println("Restocking was successfull");
-                } else {
+                 }
+                 else 
+                 {
                     System.out.println("Restocking was unsuccessfull");
+                 }
+                }
+                else
+                {
+                 System.out.println("No items will be adjusted .. Enter items to purchased with in stock");
+                 
                 }
                 break;
 
@@ -190,7 +202,8 @@ public class Inventory implements Serializable, IfcInventory {
                     Item ItemObj = mapElement.getKey();
                     Integer quantityPurchased = mapElement.getValue();
 
-                    if (this.getAvailableInventoryItems().containsKey(ItemObj.getItemName())) {
+                    if (this.getAvailableInventoryItems().containsKey(ItemObj.getItemName())) 
+                    {
                         System.out.println("Item has been found in the Inventory Map...Now add items back to the inventory hashmap");
 
                         Inventory tempInv = this.InvHashMap.get(ItemObj.getItemName());
@@ -198,30 +211,46 @@ public class Inventory implements Serializable, IfcInventory {
                         tempInv.setStockPerItem(tempInv.getStockPerItem() + quantityPurchased);
 
                         System.out.println("Item - " + ItemObj + " is Updated.");
-                    } else {
-                        System.out.println("cannot add items back to inventory");
+                        
+                        canAdjustItems=true;
+                    } 
+                    else 
+                    {
+                        System.out.println("Item not found in the inventory , cannot add items back to inventory");
+                        canAdjustItems=false;
                     }
 
                 }
 
                 //Make a call to CreateReStockOrder() by passing the updated state of inventory.
 
-                if (this.createReStockOrder()) {
+                if(canAdjustItems)
+                {
+                 if (this.createReStockOrder()) 
+                 {
                     System.out.println("Restocking was successfull");
-                } else {
+                 }
+                 else 
+                 {
                     System.out.println("Restocking was unsuccessfull");
+                 }
                 }
-
+                else
+                {
+                 System.out.println("No items will be adjusted .. Enter items to purchased with in stock");
+                 
+                }
                 break;
         }
     }
 
     //This method is to be called when writing Inventory File
-    public boolean writeInventoryFile(String PathToWrite, Inventory inv) {
+    public void writeInventoryFile(String PathToWrite, Inventory inv) {
         FileOutputStream fout = null;
         ObjectOutputStream oos = null;
 
         try {
+        	
             fout = new FileOutputStream(new File(PathToWrite));
             oos = new ObjectOutputStream(fout);
 
@@ -241,10 +270,9 @@ public class Inventory implements Serializable, IfcInventory {
             }
 
         }
-
-        return true;
     }
-
+        
+    
     public boolean containsAvailableItem(String itemName) {
         return true;
     }
