@@ -13,9 +13,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class Inventory implements Serializable, IfcInventory {
     /**
-     *
-     */
-    private static final long serialVersionUID = 12002112L;
+	 * 
+	 */
+	private static final long serialVersionUID = 4092437609098686219L;
     private Item ItemObj;
     private int StockPerItem;
     private double itemThreshold;
@@ -304,7 +304,7 @@ public class Inventory implements Serializable, IfcInventory {
     public void setOrderItem(OrderStock orderItem) {
         OrderItem = orderItem;
     }
-
+    
     public String toString() {
         return this.ItemObj.getItemName() + " , " + this.ItemObj.getItemCategory() + " ," + this.ItemObj.getUnitPrice() + " , " + this.getItemThreshold() + " , " + this.getStockPerItem() + " , " + this.getOrderItem();
     }
