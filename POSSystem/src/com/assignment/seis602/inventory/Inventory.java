@@ -43,8 +43,8 @@ public class Inventory implements Serializable, IfcInventory {
         ObjectInputStream ois = null;
 
 
-      //  if (objectFile.exists()) {
-        if(false) {
+        //  if (objectFile.exists()) {
+        if (false) {
             //Read current state from the existing Object state file.
             fin = new FileInputStream(objectFile);
             ois = new ObjectInputStream(fin);
@@ -97,7 +97,7 @@ public class Inventory implements Serializable, IfcInventory {
                     if (itemObjForOrder != null) {
                         invObj.setOrderItem(new OrderStock(itemObjForOrder, "ABC", 10));
                     } else {
-                        System.out.println("Order already exist ,no new order will be generated for item :" + mapElement.getKey());
+                        //  System.out.println("Order already exist ,no new order will be generated for item :" + mapElement.getKey());
                     }
                 }
             }
@@ -116,31 +116,31 @@ public class Inventory implements Serializable, IfcInventory {
     }
 
 
-
-
     public void adjustInventory(String itemName, char typeOfAdjustment) {
 
         boolean canAdjustItems = false;
-        Item ItemObj = getInventoryItem(itemName);
+        InventoryItem tempInv = getInventoryItem(itemName);
 
         switch (typeOfAdjustment) {
             case 'R':
                 //'R' refers to removing items of sale from Inventory
 
 
-                if (this.getAvailableInventoryItems().containsKey(ItemObj.getItemName())) {
+                if (this.getAvailableInventoryItems().containsKey(tempInv.getItem().getItemName())) {
 
-                    InventoryItem tempInv = this.invHashMap.get(ItemObj.getItemName());
+                    if (this.getAvailableInventoryItems().containsKey(tempInv.getItem().getItemName())) {
+                        // System.out.println("Item has been found in the Inventory Map...Now update the inventory hashmap");
 
-                    if (tempInv.getStockPerItem() - 1 >= 0) {
-                        canAdjustItems = true;
-                        tempInv.setStockPerItem(tempInv.getStockPerItem() - 1);
+                        if (tempInv.getStockPerItem() - 1 >= 0) {
+                            canAdjustItems = true;
+                            tempInv.setStockPerItem(tempInv.getStockPerItem() - 1);
 
-                        System.out.println("Item - " + ItemObj + " is Updated.");
-                    } else {
-                        canAdjustItems = false;
-                        System.out.println("cannot update the stock less than 0");
+                            System.out.println("Item - " + tempInv + " is Updated.");
+                        } else {
+                            canAdjustItems = false;
+                            // System.out.println("cannot update the stock less than 0");
 
+                        }
                     }
                 }
 
@@ -149,12 +149,12 @@ public class Inventory implements Serializable, IfcInventory {
 
                 if (canAdjustItems) {
                     if (this.createReStockOrder()) {
-                        System.out.println("Restocking was successfull");
+                        //  System.out.println("Restocking was successfull");
                     } else {
-                        System.out.println("Restocking was unsuccessfull");
+                        //  System.out.println("Restocking was unsuccessfull");
                     }
                 } else {
-                    System.out.println("No items will be adjusted .. Enter items to purchased with in stock");
+                    // System.out.println("No items will be adjusted .. Enter items to purchased with in stock");
 
                 }
                 break;
@@ -163,20 +163,20 @@ public class Inventory implements Serializable, IfcInventory {
                 // 'A' refers to add items from return or cancellation of sale to Inventory
 
 
-                if (this.getAvailableInventoryItems().containsKey(ItemObj.getItemName())) {
-                    System.out.println("Item has been found in the Inventory Map...Now add items back to the inventory hashmap");
+                if (this.getAvailableInventoryItems().containsKey(tempInv.getItem().getItemName())) {
+                    // System.out.println("Item has been found in the Inventory Map...Now add items back to the inventory hashmap");
 
-                    InventoryItem tempInv = this.invHashMap.get(ItemObj.getItemName());
 
                     tempInv.setStockPerItem(tempInv.getStockPerItem() + 1);
 
-                    System.out.println("Item - " + ItemObj + " is Updated.");
+                    //  System.out.println("Item - " + ItemObj + " is Updated.");
 
                     canAdjustItems = true;
                 } else {
-                    System.out.println("Item not found in the inventory , cannot add items back to inventory");
+                    //  System.out.println("Item not found in the inventory , cannot add items back to inventory");
                     canAdjustItems = false;
                 }
+
 
         }
 
@@ -191,7 +191,18 @@ public class Inventory implements Serializable, IfcInventory {
         } else {
             System.out.println("No items will be adjusted .. Enter items to purchased with in stock");
 
+            if (canAdjustItems) {
+                if (this.createReStockOrder()) {
+                    //  System.out.println("Restocking was successfull");
+                } else {
+                    // System.out.println("Restocking was unsuccessfull");
+                }
+            } else {
+                // System.out.println("No items will be adjusted .. Enter items to purchased with in stock");
+
+            }
         }
+
     }
 
 
@@ -232,8 +243,8 @@ public class Inventory implements Serializable, IfcInventory {
     }
 
 
-    public Item getInventoryItem(String itemName) {
-        return invHashMap.get(itemName).getItem();
+    public InventoryItem getInventoryItem(String itemName) {
+        return invHashMap.get(itemName);
     }
 
     public void printInventory() {

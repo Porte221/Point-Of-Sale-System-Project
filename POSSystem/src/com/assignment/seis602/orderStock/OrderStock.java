@@ -2,14 +2,17 @@ package com.assignment.seis602.orderStock;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-
 import com.assignment.seis602.item.Item;
 
 public class OrderStock implements Serializable
 {
 
-	private Long orderNumber;
-	private LocalDate orderDate;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6206518375854583319L;
+	private int orderNumber;
+	private String orderDate;
 	private Item orderItem;
 	private String SupplierName;
 	private int orderQuantity;
@@ -25,24 +28,23 @@ public class OrderStock implements Serializable
     	this.orderItem=ordItem;	
     	this.orderQuantity=quantity;
     	this.SupplierName=suppName;
-    	
-    	orderDate	= LocalDate.now();
-  	    this.orderNumber=Math.round(Math.random()*5)+minOrderNumber++;
+    	this.orderDate= LocalDate.now()+","+java.time.ZonedDateTime.now().getHour()+":"+java.time.ZonedDateTime.now().getMinute()+":"+java.time.ZonedDateTime.now().getSecond();
+  	    this.orderNumber=(minOrderNumber++)*500;
     }
 
-	public Long getOrderNumber() {
+	public int getOrderNumber() {
 		return orderNumber;
 	}
 
-	public void setOrderNumber(Long orderNumber) {
+	public void setOrderNumber(int orderNumber) {
 		this.orderNumber = orderNumber;
 	}
 
-	public LocalDate getOrderDate() {
+	public String getOrderDate() {
 		return orderDate;
 	}
 
-	public void setOrderDate(LocalDate orderDate) {
+	public void setOrderDate(String orderDate) {
 		this.orderDate = orderDate;
 	}
 
@@ -68,6 +70,11 @@ public class OrderStock implements Serializable
 
 	public void setOrderQuantity(int orderQuantity) {
 		this.orderQuantity = orderQuantity;
+	}
+	
+	public String toString()
+	{
+		return this.getOrderNumber()+" || "+this.getOrderDate()+" || "+this.getOrderQuantity()+" || "+this.getSupplierName()+" || "+this.getOrderItem().getItemName();
 	}
 }
 
