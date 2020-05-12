@@ -6,9 +6,9 @@ public interface IPoSRegister {
 
     void startOrder();
 
-    void addItem(Item itemToAdd);
+    void addItem();
 
-    void removeItem(Item itemToRemove);
+    void removeItem();
 
     void cancelOrder();
 

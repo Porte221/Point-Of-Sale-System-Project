@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Scanner;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class ConsoleUIDriver {
 
@@ -23,28 +24,26 @@ public class ConsoleUIDriver {
 
 
     private static void loadSystemDependencies() {
-//        new Item().StartCreateItems();
-//        new Inventory().generateInventoryItems();
         register = new PoSRegister();
     }
 
     private static String displayUIOptions() throws IOException {
-        System.out.println("Select one of the following options: (Enter associated numeric value)");
+
+        System.out.println("\r\n\r\nSelect one of the following options: (Enter associated numeric value)");
         System.out.println("1. New Sale");
         System.out.println("2. Sign Out");
         System.out.println("3. Shutdown");
         System.out.println("4. Print Register Report");
         System.out.println("5. Print Detailed Register Report");
 
-
         Scanner in = new Scanner(System.in);
-
 
         return in.nextLine();
     }
 
     private static void startListener() {
         String response = "";
+        System.out.println();
 
         try {
             do {

@@ -1,4 +1,4 @@
-package com.assignment.seis602.sale;
+package com.assignment.seis602.item;
 
 import com.assignment.seis602.item.Item;
 

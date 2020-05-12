@@ -1,8 +1,11 @@
 package com.assignment.seis602.sale;
 
+import com.assignment.seis602.inventory.Inventory;
 import com.assignment.seis602.item.Item;
+import com.assignment.seis602.item.SaleItem;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
 
@@ -25,6 +28,9 @@ public class Sale implements IfcSale {
             storedItem.setItemCount(count + 1);
             saleItems.put(item.getItemName(), storedItem);
         }
+
+
+        saleAmount += item.getUnitPrice();
     }
 
 
@@ -44,6 +50,17 @@ public class Sale implements IfcSale {
 
     public double getSaleAmount() {
         return saleAmount;
+    }
+
+    public void cancelSale(Inventory inv) {
+        Iterator<Map.Entry<String, SaleItem>> itr = saleItems.entrySet().iterator();
+        while(itr.hasNext())
+        {
+            Map.Entry<String, SaleItem> entry = itr.next();
+            for(int i = entry.getValue().getItemCount(); i > 0; i--) {
+                inv.adjustInventory(entry.getValue().getItem().getItemName(), 'A');
+            }
+        }
     }
 
     public void setSaleAmount(double saleAmount) {
