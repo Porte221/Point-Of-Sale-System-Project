@@ -79,7 +79,7 @@ public class PoSRegister implements IPoSRegister {
             String itemName = reader.readLine();
 
             if (inventory.containsAvailableItem(itemName)) {
-                itemToAdd = inventory.getInventoryItem(itemName);
+                itemToAdd = inventory.getInventoryItem(itemName).getItem();
                 saleItem.addItem(itemToAdd);
                 inventory.adjustInventory(itemName, 'R');
             } else {
@@ -106,7 +106,7 @@ public class PoSRegister implements IPoSRegister {
         try {
 
             String itemName = reader.readLine();
-            itemToRemove = inventory.getInventoryItem(itemName);
+            itemToRemove = inventory.getInventoryItem(itemName).getItem();
             saleItem.removeItem(itemToRemove);
 
         } catch (Exception e) {
