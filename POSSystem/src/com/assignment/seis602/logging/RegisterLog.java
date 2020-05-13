@@ -1,5 +1,6 @@
 package com.assignment.seis602.logging;
 
+import com.assignment.seis602.interfaces.Reportable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -12,7 +13,12 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class RegisterLog extends PoSLogger {
+
+/**
+ * @Author Ryan Poorman
+ * @Description RegisterLog is used to provide custom logging for reportable log files
+ */
+public class RegisterLog implements Reportable {
     private static final Logger LOGGER = LogManager.getLogger(RegisterLog.class);
     private ConcurrentLinkedQueue<String> logQueue = new ConcurrentLinkedQueue();
     private int queueThreshhold = 5;
@@ -37,7 +43,7 @@ public class RegisterLog extends PoSLogger {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("--REGISTER LOG DUMP--");
+        ILogger.logToConsole("--REGISTER LOG DUMP--");
 
         list.forEach(System.out::println);
     }
@@ -56,10 +62,9 @@ public class RegisterLog extends PoSLogger {
             e.printStackTrace();
         }
 
-        System.out.println("--DETAILED REGISTER LOG REPORT--");
+        ILogger.logToConsole("--DETAILED REGISTER LOG REPORT--");
         list.forEach(System.out::println);
     }
-
 
     public void log(String message) {
         logQueue.add(message);

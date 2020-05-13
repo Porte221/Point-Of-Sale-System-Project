@@ -14,20 +14,20 @@ public class OrderStock implements Serializable
 	private int orderNumber;
 	private String orderDate;
 	private Item orderItem;
-	private String SupplierName;
+	private String supplierName;
 	private int orderQuantity;
 	private static int minOrderNumber=10;
 	
 	public OrderStock()
 	{
-	  
+	  setSupplierName("Undetermined");
 	}
 
     public OrderStock(Item ordItem,String suppName,int quantity)
     {
     	this.orderItem=ordItem;	
     	this.orderQuantity=quantity;
-    	this.SupplierName=suppName;
+    	this.supplierName =suppName;
     	this.orderDate= LocalDate.now()+","+java.time.ZonedDateTime.now().getHour()+":"+java.time.ZonedDateTime.now().getMinute()+":"+java.time.ZonedDateTime.now().getSecond();
   	    this.orderNumber=(minOrderNumber++)*500;
     }
@@ -57,11 +57,11 @@ public class OrderStock implements Serializable
 	}
 
 	public String getSupplierName() {
-		return SupplierName;
+		return supplierName;
 	}
 
 	public void setSupplierName(String supplierName) {
-		SupplierName = supplierName;
+		this.supplierName = supplierName;
 	}
 	
 	public int getOrderQuantity() {

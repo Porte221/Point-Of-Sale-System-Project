@@ -5,6 +5,10 @@ import com.assignment.seis602.orderStock.OrderStock;
 
 import java.io.Serializable;
 
+/**
+ * @Author Ryan Poorman and Aadil Sharma
+ * @Description InventoryItem is the POJO holding all data necessary to track and update items from the inventory
+ */
 public class InventoryItem implements Serializable {
 
     private static final long serialVersionUID = 1420672609912364060L;

@@ -2,6 +2,7 @@ package com.assignment.seis602.inventory;
 
 import com.assignment.seis602.item.InventoryItem;
 import com.assignment.seis602.item.Item;
+import com.assignment.seis602.logging.ILogger;
 import com.assignment.seis602.orderStock.OrderStock;
 
 import java.io.*;
@@ -65,7 +66,7 @@ public class Inventory implements Serializable, IfcInventory {
             int minVStockValue = 10;
 
             for (Item e : itemList) {
-                invHashMap.put(e.getItemName(), new InventoryItem(e, Math.round((minVStockValue) * 0.40), null, (int) (Math.random() * 5) + minVStockValue));
+                invHashMap.put(e.getItemName(), new InventoryItem(e, Math.round((minVStockValue) * 0.40), new OrderStock(), (int) (Math.random() * 5) + minVStockValue));
             }
 
             writeInventoryFile(outputDataStateLocation, this);
@@ -85,11 +86,11 @@ public class Inventory implements Serializable, IfcInventory {
                 InventoryItem invObj = mapElement.getValue();
 
                 if (invObj.getStockPerItem() < invObj.getItemThreshold()) {
-                    System.out.println("Item stock found to be less than item threshold defined...creating restock order");
+                    ILogger.logToConsole("Item stock found to be less than item threshold defined...creating restock order");
 
                     for (Item e : itemList) {
                         if (e.getItemName().equalsIgnoreCase(mapElement.getKey())) {
-                            System.out.println("Item Found");
+                            ILogger.logToConsole("Item Found");
                             itemObjForOrder = e;
                         }
                     }
@@ -97,7 +98,7 @@ public class Inventory implements Serializable, IfcInventory {
                     if (itemObjForOrder != null) {
                         invObj.setOrderItem(new OrderStock(itemObjForOrder, "ABC", 10));
                     } else {
-                        //  System.out.println("Order already exist ,no new order will be generated for item :" + mapElement.getKey());
+                        //  ILogger.logToConsole("Order already exist ,no new order will be generated for item :" + mapElement.getKey());
                     }
                 }
             }
@@ -129,16 +130,15 @@ public class Inventory implements Serializable, IfcInventory {
                 if (this.getAvailableInventoryItems().containsKey(tempInv.getItem().getItemName())) {
 
                     if (this.getAvailableInventoryItems().containsKey(tempInv.getItem().getItemName())) {
-                        // System.out.println("Item has been found in the Inventory Map...Now update the inventory hashmap");
+                        // ILogger.logToConsole("Item has been found in the Inventory Map...Now update the inventory hashmap");
 
                         if (tempInv.getStockPerItem() - 1 >= 0) {
                             canAdjustItems = true;
                             tempInv.setStockPerItem(tempInv.getStockPerItem() - 1);
 
-                            System.out.println("Item - " + tempInv + " is Updated.");
                         } else {
                             canAdjustItems = false;
-                            // System.out.println("cannot update the stock less than 0");
+                            // ILogger.logToConsole("cannot update the stock less than 0");
 
                         }
                     }
@@ -149,12 +149,12 @@ public class Inventory implements Serializable, IfcInventory {
 
                 if (canAdjustItems) {
                     if (this.createReStockOrder()) {
-                        //  System.out.println("Restocking was successfull");
+                        //  ILogger.logToConsole("Restocking was successfull");
                     } else {
-                        //  System.out.println("Restocking was unsuccessfull");
+                        //  ILogger.logToConsole("Restocking was unsuccessfull");
                     }
                 } else {
-                    // System.out.println("No items will be adjusted .. Enter items to purchased with in stock");
+                    // ILogger.logToConsole("No items will be adjusted .. Enter items to purchased with in stock");
 
                 }
                 break;
@@ -164,16 +164,16 @@ public class Inventory implements Serializable, IfcInventory {
 
 
                 if (this.getAvailableInventoryItems().containsKey(tempInv.getItem().getItemName())) {
-                    // System.out.println("Item has been found in the Inventory Map...Now add items back to the inventory hashmap");
+                    // ILogger.logToConsole("Item has been found in the Inventory Map...Now add items back to the inventory hashmap");
 
 
                     tempInv.setStockPerItem(tempInv.getStockPerItem() + 1);
 
-                    //  System.out.println("Item - " + ItemObj + " is Updated.");
+                    //  ILogger.logToConsole("Item - " + ItemObj + " is Updated.");
 
                     canAdjustItems = true;
                 } else {
-                    //  System.out.println("Item not found in the inventory , cannot add items back to inventory");
+                    //  ILogger.logToConsole("Item not found in the inventory , cannot add items back to inventory");
                     canAdjustItems = false;
                 }
 
@@ -184,21 +184,21 @@ public class Inventory implements Serializable, IfcInventory {
 
         if (canAdjustItems) {
             if (this.createReStockOrder()) {
-                System.out.println("Restocking was successfull");
+                ILogger.logToConsole("Restocking was successfull");
             } else {
-                System.out.println("Restocking was unsuccessfull");
+                ILogger.logToConsole("Restocking was unsuccessfull");
             }
         } else {
-            System.out.println("No items will be adjusted .. Enter items to purchased with in stock");
+            ILogger.logToConsole("No items will be adjusted .. Enter items to purchased with in stock");
 
             if (canAdjustItems) {
                 if (this.createReStockOrder()) {
-                    //  System.out.println("Restocking was successfull");
+                    //  ILogger.logToConsole("Restocking was successfull");
                 } else {
-                    // System.out.println("Restocking was unsuccessfull");
+                    // ILogger.logToConsole("Restocking was unsuccessfull");
                 }
             } else {
-                // System.out.println("No items will be adjusted .. Enter items to purchased with in stock");
+                // ILogger.logToConsole("No items will be adjusted .. Enter items to purchased with in stock");
 
             }
         }
@@ -221,13 +221,13 @@ public class Inventory implements Serializable, IfcInventory {
             oos.writeObject(inv.getAvailableInventoryItems());
 
         } catch (IOException ex) {
-            System.out.println(ex);
+            ex.printStackTrace();
         } finally {
             try {
                 oos.close();
                 fout.close();
             } catch (IOException ex) {
-                System.out.println(ex);
+                ex.printStackTrace();
             }
 
         }
@@ -247,11 +247,15 @@ public class Inventory implements Serializable, IfcInventory {
         return invHashMap.get(itemName);
     }
 
-    public void printInventory() {
+
+    public void printDetailedInventory() {
         Iterator it = invHashMap.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry) it.next();
-            System.out.println(pair.getKey() + " = " + pair.getValue().getClass());
+            ILogger.logToConsole("Name: " + pair.getKey() + " || Quantity: " + ((InventoryItem) pair.getValue()).getStockPerItem()
+                    + " || Threshold: " + ((InventoryItem) pair.getValue()).getItemThreshold()
+                    + " || Supplier: " + ((InventoryItem) pair.getValue()).getOrderItem().getSupplierName()
+                    + " || On Order: " + ((InventoryItem) pair.getValue()).getOrderItem().getOrderQuantity());
         }
     }
 

@@ -1,18 +1,31 @@
 package com.assignment.seis602.cashier;
 
+import com.assignment.seis602.logging.ILogger;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
 import java.util.Scanner;
 
+/**
+ * @Authors Ryan Poorman and Xavier Porter
+ * @Description CashierAuthenticator is used to validate the username and password provided through the console
+ * with the credentials stored in the associated txt file
+ */
 public class CashierAuthenticator {
 
     private static final String FILE_PATH = "resources/login.txt";
 
+    /**
+     * Returns an Cashier object that will be associated with the PoSRegister until
+     * that Cashier logs off
+     *
+     * @return      the Cashier mapped to the credentials file
+     * @see         Cashier
+     */
     public static Cashier conductUserLogin() {
 
-        boolean awaitingLogin = true;
         String inputUsername = "";
         String inputPassword = "";
 
@@ -22,11 +35,11 @@ public class CashierAuthenticator {
         try {
 
             while (true) {
-                System.out.println("Please Enter Username:");
+                ILogger.logToConsole("Please Enter Username:");
                 inputUsername = reader.readLine().trim();
 
 
-                System.out.println("Please Enter Password:");
+                ILogger.logToConsole("Please Enter Password:");
                 inputPassword = reader.readLine().trim();
 
                 Cashier cashier = checkCredentials(inputUsername, inputPassword);
@@ -51,14 +64,14 @@ public class CashierAuthenticator {
             tmpUsername = fileScanner.next();
             tmpPassword = fileScanner.next();
             if (inputUsername.equals(tmpUsername) && inputPassword.equals(tmpPassword)) {
-                System.out.println("Login Successful");
+                ILogger.logToConsole("Login Successful");
                 return new Cashier(inputUsername, inputPassword, fileScanner.next());
             }
             fileScanner.nextLine();
 
         }
 
-        System.out.println("Invalid username/password please try again");
+        ILogger.logToConsole("Invalid username/password please try again");
         return null;
     }
 }

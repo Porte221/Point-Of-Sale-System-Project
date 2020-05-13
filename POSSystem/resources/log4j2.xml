@@ -14,18 +14,17 @@
         </RollingFile>
 
         <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d %-5p [%t] %C{2} (%F:%L) - %m%n"/>
+            <PatternLayout pattern="%m%n"/>
         </Console>
     </Appenders>
     <Loggers>
 
-        <Root level="all">
-            <AppenderRef ref="audit-register" level="debug"/>
+        <Root level="debug">
+            <AppenderRef ref="audit-register" />
         </Root>
 
-        <Logger name="*" level="info">
-            <AppenderRef ref="Console"/>
-        </Logger>
+
+
 
 
     </Loggers>
