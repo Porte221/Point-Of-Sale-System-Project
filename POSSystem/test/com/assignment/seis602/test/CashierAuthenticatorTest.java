@@ -1,4 +1,4 @@
-package com.assignment.seis602;
+package com.assignment.seis602.test;
 
 import com.assignment.seis602.cashier.Cashier;
 import com.assignment.seis602.cashier.CashierAuthenticator;
