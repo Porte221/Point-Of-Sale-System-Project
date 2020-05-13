@@ -138,7 +138,8 @@ public class PoSRegister extends PoSRegisterUI implements IPoSRegister {
            if(deleteFullSale()) {
                RecordedSales.cancelSale(saleId, inventory);
            } else {
-               requestItemNameToDelete();
+               String itemName = requestItemNameToDelete();
+               RecordedSales.removeItemFromPriorSale(saleId, inventory, itemName);
            }
         }
     }

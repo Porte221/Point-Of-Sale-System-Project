@@ -19,7 +19,7 @@ public class Sale implements IfcSale {
     private Map<String, SaleItem> saleItems;
 
     public Sale() {
-        saleID = new Random().nextInt(1);
+        saleID = new Random().nextInt();
         saleItems = new HashMap();
     }
 
