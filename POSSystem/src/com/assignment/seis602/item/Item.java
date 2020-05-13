@@ -7,6 +7,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+
+/**
+ * @Author Aadil Sharma
+ * @Description Item Class represents the Items for which inventory will be generated.
+ *              It follows a singleton pattern to initialize the item objects at the start of application.
+ */
+
 public class Item implements Serializable, IfcItem {
 
     private String itemName;

@@ -142,6 +142,10 @@ public class PoSRegister extends PoSRegisterUI implements IPoSRegister {
                RecordedSales.removeItemFromPriorSale(saleId, inventory, itemName);
            }
         }
+        else
+        {
+        	 ILogger.logToConsole("Invalid sale ID entered, please enter valid sale id.");
+        }
     }
 
 

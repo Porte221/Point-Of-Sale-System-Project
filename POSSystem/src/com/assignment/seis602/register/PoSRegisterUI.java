@@ -10,7 +10,6 @@ import com.assignment.seis602.item.SaleItem;
 import com.assignment.seis602.logging.ILogger;
 import com.assignment.seis602.logging.RegisterLog;
 import com.assignment.seis602.sale.Sale;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -42,9 +41,7 @@ public class PoSRegisterUI implements IPoSReports, IPoSSecurity {
         ILogger.logToConsole("6. Print Detailed Register Report");
         ILogger.logToConsole("7. Print Inventory Report");
 
-
         Scanner in = new Scanner(System.in);
-
         return in.nextLine();
     }
 
@@ -146,7 +143,7 @@ public class PoSRegisterUI implements IPoSReports, IPoSSecurity {
 
 
     public boolean deleteFullSale() {
-        ILogger.logToConsole("Enter 1 to delete the entire sale.");
+        ILogger.logToConsole("Enter 1 to delete the entire sale or enter anyother number to select returning specific item.");
 
         BufferedReader reader =
                 new BufferedReader(new InputStreamReader(System.in));
