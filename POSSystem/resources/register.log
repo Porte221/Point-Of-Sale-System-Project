@@ -170,3 +170,12 @@
 2020-05-12 19:10:55,884 Sale: 0 has been checked out at register #504058635
 2020-05-13 11:54:28,101 Register: 1389771360 has been started
 2020-05-13 11:54:32,801 Cashier:  logged in
+2020-05-13 12:14:20,038 Register: -1050056872 has been started
+2020-05-13 12:14:22,750 Cashier:  logged in
+2020-05-13 12:14:46,602 Item: Cleaner, Household, 5.99 was added to the sale: -235147053 at register #-1050056872
+2020-05-13 12:14:59,205 Item: FIFA, Electronics, 60.99 was added to the sale: -235147053 at register #-1050056872
+2020-05-13 12:15:03,964 Item: FIFA, Electronics, 60.99 was added to the sale: -235147053 at register #-1050056872
+2020-05-13 12:15:18,454 Sale was canceled: -235147053 at register #-1050056872
+2020-05-13 12:16:52,228 Register: 348508254 has been started
+2020-05-13 12:17:43,207 Register: 538043364 has been started
+2020-05-13 12:17:46,461 Cashier:  logged in
